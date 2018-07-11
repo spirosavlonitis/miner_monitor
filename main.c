@@ -7,16 +7,16 @@
 #define MINUTE	 60
 #define MON_INRERVAL	5
 
-#define COMMAND  "daemon mine_classic"
-#define PIDOF 	 "pidof ethminer"
+#define COMMAND  "daemon mine_zec"
+#define PIDOF 	 "pidof miner"
 
 void recover(FILE *,char *);
 
 int l;
 
-int main(int argc, char *argv[])
+int main(int argc, char  *argv[])
 {
-	int temp;
+	int temp, p_pid;
 	char path[MAXCHARS];
 	FILE *lg;
 	struct passwd *pwd;
@@ -24,19 +24,21 @@ int main(int argc, char *argv[])
 	pwd = getpwuid(geteuid());
 	snprintf(path, sizeof(path),"/home/%s/gpu_temp.md",pwd->pw_name);
 	l = 1;
+	p_pid = getpid();
 
 	for (; ;) {
 		lg = fopen(path,"a");
 		if (l)
 			temp = logtemp(lg);
 
-		if (WEXITSTATUS(system(PIDOF)) == 1)
-			system(COMMAND);
-		else if (temp >= MAXTEMP)
+		if (WEXITSTATUS(system(PIDOF)) == 1){
+				if (fork() == 0)
+					execv("./miner",argv);
+		}else if (temp >= MAXTEMP)
 			recover(lg,PIDOF);
 		
 		fclose(lg);
-		sleep(MON_INRERVAL*MINUTE);
+		sleep(MINUTE);
 	}
 	exit(EXIT_SUCCESS);
 }
