@@ -21,6 +21,10 @@ When you are all set, all you have to do is edit the constants in the main.c fil
 #define PIDOF 	 "pidof your_edit"
 ```
 
+```shell
+    gcc *.c -o prog_name
+```
+
 You can also set other values as well
 ```C
   #define MAXTEMP      81    /*  Temperature limit, when reached the program goes in the recovery state. */
