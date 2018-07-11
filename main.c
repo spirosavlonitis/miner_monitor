@@ -7,12 +7,10 @@
 #define MINUTE	 60
 #define MON_INRERVAL	5
 
-#define COMMAND  "mine_zec"
-#define PIDOF 	 "pidof miner"
+#define COMMAND  "mine_classic"
+#define PIDOF 	 "pidof ethminer"
 
 void recover(FILE *,char *);
-
-int l;
 
 int main(int argc, char  *argv[])
 {
@@ -28,20 +26,18 @@ int main(int argc, char  *argv[])
 	parent = fork();
 
 	for (; ;) {
-
-		if (parent){	/* parent process monitors temperature */
+		if (parent){	/* parent process handles temperature */
 			if (l)
 				lg = fopen(path,"a");
 			temp = logtemp((l) ? lg : stderr);
 			
-			if (parent && temp >= MAXTEMP)
-				recover(lg,PIDOF);
+			if (temp >= MAXTEMP)
+				recover((l) ? lg : stderr, PIDOF);
 			if (l)
 				fclose(lg);
-		}else if (parent == 0 &&  WEXITSTATUS(system(PIDOF)) == 1) /* fork monitors connection status */
-					system(COMMAND);
-			
-		sleep(MINUTE);
+		}else if (WEXITSTATUS(system(PIDOF)) == 1) /* forked process monitors connection status */
+				system(COMMAND);
+		sleep(MON_INRERVAL*MINUTE);		
 	}
 	exit(EXIT_SUCCESS);
 }
