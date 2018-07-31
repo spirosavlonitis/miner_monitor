@@ -37,12 +37,19 @@ int main(int argc, char *argv[])
 static void readargs(int argc, char **argv)
 {
 	char	c;
+	int		i;
 
-	while (--argc > 0) {
-		c = **argv++;
-		switch (c) {
-			case '-':
-				break;
-		}
+	while ( --argc > 0 && (c = **++argv ) ) {
+		if (c == '-')
+			for (i = 1; (c = (*argv)[i]) ; ++i)
+				switch (c) {
+					case 'l':
+						l = 1;
+						break;
+					default:
+						err_quit("uknown option %c", c);
+						break;
+				}
 	}
+	
 }

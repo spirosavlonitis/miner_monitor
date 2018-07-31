@@ -13,5 +13,6 @@
 
 void recover(FILE *,char *);
 int logtemp(FILE *);
+void err_quit(char *, ...);
 
 int l;
