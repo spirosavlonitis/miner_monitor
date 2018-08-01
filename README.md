@@ -43,3 +43,7 @@ You can also set other values as well
 #define COMMAND  "daemon my_command"
 #define PIDOF 	 "pidof ethminer"
 ```
+3. Compile the program
+```shell
+    gcc *c -o miner_monitor.out
+```
