@@ -29,6 +29,16 @@ static int gettemp(int *temps)
 	return maxtemp;
 }
 
+#define Green	"\033[0;32m"
+#define White	"\x1b[0m"
+
+static void color_log(FILE *fp,int i,int *temps)
+{
+	if (*temps < 70)
+		fprintf(fp,"gpu%d:%s%d%s%s", i, Green, *temps, White,(*(temps+1) == -1) ?  ", miner pid: " : ", ");
+
+}
+
 int logtemp(FILE *fp)
 {
 	char	buf[MAXCHARS];
@@ -44,7 +54,10 @@ int logtemp(FILE *fp)
 	maxtemp = gettemp(temps);
 	fprintf(fp, "%s  ", buf);
 	for (i = 0; temps[i] != -1; ++i)
-		fprintf(fp,"gpu%d:%d%s", i, temps[i], (temps[i+1] == -1) ?  ", miner pid: " : ", ");
+		if (l == 0)
+			color_log(fp, i, temps+i);
+		else
+		  fprintf(fp,"gpu%d:%d%s", i, temps[i], (temps[i+1] == -1) ?  ", miner pid: " : ", ");
 
 	fflush(fp);
 	return maxtemp;

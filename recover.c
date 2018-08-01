@@ -14,8 +14,7 @@ void recover(FILE *fp,char *pidof)
 
 	while (timeout > 0){
 		fprintf(fp, "Time until retry %ldmin\n", timeout/MINUTE);
-		if (l) 
-			fflush(fp);
+		fflush(fp);
 		timeout -= MINUTE;
 		sleep(MINUTE);
 	}

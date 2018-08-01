@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
 
 		if (WEXITSTATUS(system(PIDOF)) == 1){
 			fprintf(fp, "%s\n", "miner down");
+			fflush(fp);
 			system(COMMAND);
 		}else if (temp >= MAXTEMP)
 			recover(fp,PIDOF);
