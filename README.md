@@ -9,7 +9,7 @@ Installing daemon package on Ubuntu 16.04 (Xenial Xerus):
   sudo apt-get install daemon
 ```
 
-Then all you have to do is edit the constants in the main.c file and compile.
+Then all you have to do is edit the constants in the hdr.h file and compile.
 
 ```C
 #define COMMAND  "daemon your_edit"
@@ -36,4 +36,10 @@ You can also set other values as well
 1. Create a symbolic link to your mining script file (the file you execute which has all of your settings).
 ```shell
  sudo ln -s $(PWD)/my_script.sh  /usr/bin/my_command
+```
+
+2. Edit the symbolic constants in the hdr.h file to match the sybolic link you create above (command), and miner's name.
+```c
+#define COMMAND  "daemon my_command"
+#define PIDOF 	 "pidof ethminer"
 ```
