@@ -48,7 +48,8 @@ You can also set other values as well
     gcc *c -o miner_monitor.out
 ```
 4. Execute the program and show the log on a shell, or daemonize it keep the log on a file.
-  a)Shell version with shell log.
+
+ a)Shell version with shell log.
 ```shell
     ./miner_monitor.out
 ````
