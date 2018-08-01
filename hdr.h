@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define MAXTEMP	 81
+#define MAXTEMP	 70
 #define MAXCHARS 1000
 #define MINUTE	 60
 #define MON_INRERVAL	5

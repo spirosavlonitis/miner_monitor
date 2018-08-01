@@ -24,15 +24,15 @@ static void setdate(int *year,int *mon,int *mday,int *hour,int *min,int *sec)
 	*hour = now->tm_hour, *min = now->tm_min, *sec = now->tm_sec;
 }
 
-int logtemp(FILE *lg)
+int logtemp(FILE *fp)
 {
 	int year,mon,mday,hour,min,sec,temp;
 	
 	temp = gettemp();
 	setdate(&year,&mon,&mday,&hour,&min,&sec);
 	
-	fprintf(lg,"%d-%d-%d %d%s%d%s%d:",year,mon,mday,hour,(min > 9) ? ":" : ":0",min,(sec > 9) ? ":" : ":0" ,sec);
-	fprintf(lg,"\t%d\n",temp);
+	fprintf(fp,"%d-%d-%d %d%s%d%s%d:",year,mon,mday,hour,(min > 9) ? ":" : ":0",min,(sec > 9) ? ":" : ":0" ,sec);
+	fprintf(fp,"\t%d\n",temp);
 
 	return temp;
 }

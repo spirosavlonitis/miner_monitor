@@ -13,7 +13,7 @@ void recover(FILE *fp,char *pidof)
 	system(kill);
 
 	while (timeout > 0){
-		fprintf(stderr,"Time until retry %ldmin\n",timeout/MINUTE);
+		fprintf(fp, "Time until retry %ldmin\n", timeout/MINUTE);
 		if (l) 
 			fflush(fp);
 		timeout -= MINUTE;
