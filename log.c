@@ -37,9 +37,9 @@ static int gettemp(int *temps)
 static void color_log(FILE *fp,int i,int *temps)
 {
 	if (*temps < 70)
-		fprintf(fp,"gpu%d:%s%d%s%s", i, Green, *temps, White,(*(temps+1) == -1) ?  ", miner pid: " : ", ");
+		fprintf(fp,"gpu%d:%s%d%s%s", i, Green, *temps, White, (*(temps+1) == -1) ?  ", miner pid: " : ", ");
 	else 
-		fprintf(fp,"gpu%d:%s%d%s%s", i,(*temps < 80) ? Yellow : Red, *temps, White,(*(temps+1) == -1) ?  ", miner pid: " : ", ");
+		fprintf(fp,"gpu%d:%s%d%s%s", i,(*temps < 80) ? Yellow : Red, *temps, White, (*(temps+1) == -1) ?  ", miner pid: " : ", ");
 }
 
 int logtemp(FILE *fp)
