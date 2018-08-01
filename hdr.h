@@ -6,6 +6,7 @@
 #define MAXCHARS 1000
 #define MINUTE	 60
 #define MON_INRERVAL	5
+#define RCV_INTERVAL  10
 
 #define COMMAND  "daemon mine_classic"
 #define PIDOF 	 "pidof ethminer"
