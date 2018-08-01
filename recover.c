@@ -9,7 +9,7 @@ void recover(FILE *fp,char *pidof)
 
 	timeout = RCV_INTERVAL * MINUTE;
 	fputs("Entered recovery mode\n", fp);
-	snprintf(kill, sizeof(kill),"kill -9 $(%s)",pidof);
+	snprintf(kill, sizeof(kill),"kill -9 $(%s)", pidof);
 	system(kill);
 
 	while (timeout > 0){
