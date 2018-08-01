@@ -3,6 +3,3 @@ default:
 
 run: default
 	./miner_monitor.out
-
-temp:
-	gcc *.c -o fork.out
