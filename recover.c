@@ -1,6 +1,6 @@
 #include "hdr.h"
 
-#define RCV_INTERVAL  10
+
 
 void recover(FILE *fp,char *pidof)
 {
