@@ -59,9 +59,9 @@ int logtemp(FILE *fp)
 	fprintf(fp, "%s  ", buf);
 	for (i = 0; temps[i] != -1; ++i)
 		if (l == 0)
-			color_log(fp, i, temps+i);
+		 	color_log(fp, i, temps+i);
 		else
-		  fprintf(fp,"gpu%d:%d%s", i, temps[i], (temps[i+1] == -1) ?  "\n" : ", ");
+		  	fprintf(fp,"gpu%d:%d%s", i, temps[i], (temps[i+1] == -1) ?  "\n" : ", ");
 
 	fflush(fp);
 	return maxtemp;
