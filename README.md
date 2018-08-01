@@ -9,12 +9,7 @@ Installing daemon package on Ubuntu 16.04 (Xenial Xerus):
   sudo apt-get install daemon
 ```
 
-Once daemon has been installed you will have to create a symbolic link to your mining script file (the file you execute which has all of your settings configured).
-```shell    
-    sudo ln -s $(PWD)/my_script.sh  /usr/bin/my_command
-```
-
-When you are all set, all you have to do is edit the constants in the main.c file and compile.
+Then all you have to do is edit the constants in the main.c file and compile.
 
 ```C
 #define COMMAND  "daemon your_edit"
@@ -36,4 +31,9 @@ You can also set other values as well
  ```C
  snprintf(path, sizeof(path),"/home/%s/gpu_temp.txt",pwd->pw_name);    /* log file path: /home/$USER/gpu_temp.txt */
  ```
-#A working example:
+# A working example:
+
+1. Create a symbolic link to your mining script file (the file you execute which has all of your settings).
+```shell
+ sudo ln -s $(PWD)/my_script.sh  /usr/bin/my_command
+```
