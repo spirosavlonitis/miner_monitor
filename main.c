@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
 	int temp;
 	char path[MAXCHARS];
-	FILE *lg;
+	FILE *fp;
 	struct passwd *pwd;
 	
 	l = 0;
@@ -18,29 +18,30 @@ int main(int argc, char *argv[])
 	snprintf(path, sizeof(path),"/home/%s/gpu_temp.md",pwd->pw_name);
 
 	for (; ;) {
-		lg = fopen(path,"a");
-		if (l)
-			temp = logtemp(lg);
+		fp = (l) ? fopen(path,"a") : stdout;
+
+		temp = logtemp(fp);
 
 		if (WEXITSTATUS(system(PIDOF)) == 1)
 			system(COMMAND);
 		else if (temp >= MAXTEMP)
-			recover(lg,PIDOF);
+			recover(fp,PIDOF);
 		
-		fclose(lg);
+		if (l)
+			fclose(fp);
+
 		sleep(MON_INRERVAL*MINUTE);
 	}
 	exit(EXIT_SUCCESS);
 }
-
 
 static void readargs(int argc, char **argv)
 {
 	char	c;
 	int		i;
 
-	while ( --argc > 0 && (c = **++argv ) ) {
-		if (c == '-')
+	while ( --argc > 0) 
+		if ( (c = **++argv ) == '-')
 			for (i = 1; (c = (*argv)[i]) ; ++i)
 				switch (c) {
 					case 'l':
@@ -50,6 +51,4 @@ static void readargs(int argc, char **argv)
 						err_quit("uknown option %c", c);
 						break;
 				}
-	}
-	
 }
