@@ -30,13 +30,16 @@ static int gettemp(int *temps)
 }
 
 #define Green	"\033[0;32m"
+#define Yellow	"\x1b[0;33m"
+#define Red		"\x1b[0;31m"
 #define White	"\x1b[0m"
 
 static void color_log(FILE *fp,int i,int *temps)
 {
 	if (*temps < 70)
 		fprintf(fp,"gpu%d:%s%d%s%s", i, Green, *temps, White,(*(temps+1) == -1) ?  ", miner pid: " : ", ");
-
+	else 
+		fprintf(fp,"gpu%d:%s%d%s%s", i,(*temps < 80) ? Yellow : Red, *temps, White,(*(temps+1) == -1) ?  ", miner pid: " : ", ");
 }
 
 int logtemp(FILE *fp)
