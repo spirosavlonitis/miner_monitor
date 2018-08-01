@@ -34,5 +34,5 @@ You can also set other values as well
  
  The log file is placed in your home directory, you can change that by editing:
  ```C
- snprintf(path, sizeof(path),"/home/%s/gpu_temp.md",pwd->pw_name);    /* log file path: /home/$USER/gpu_temp.md */
+ snprintf(path, sizeof(path),"/home/%s/gpu_temp.md",pwd->pw_name);    /* log file path: /home/$USER/gpu_temp.txt */
  ```
