@@ -22,14 +22,14 @@ int main(int argc, char *argv[])
 
 		temp = logtemp(fp);
 
-		if (WEXITSTATUS(system(PIDOF)) == 1)
+		if (WEXITSTATUS(system(PIDOF)) == 1){
+			fprintf(fp, "%s\n", "miner down");
 			system(COMMAND);
-		else if (temp >= MAXTEMP)
+		}else if (temp >= MAXTEMP)
 			recover(fp,PIDOF);
 		
 		if (l)
 			fclose(fp);
-
 		sleep(MON_INRERVAL*MINUTE);
 	}
 	exit(EXIT_SUCCESS);

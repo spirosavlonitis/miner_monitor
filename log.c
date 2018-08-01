@@ -42,9 +42,9 @@ int logtemp(FILE *fp)
 	for (i = 0; i < MAXGPU ; ++i)
 		temps[i] = -1;
 	maxtemp = gettemp(temps);
-	fprintf(fp, "%s  temperatures ", buf);
+	fprintf(fp, "%s  ", buf);
 	for (i = 0; temps[i] != -1; ++i)
-		fprintf(fp,"gpu%d: %d%s", i, temps[i], (temps[i+1] == -1) ?  "\n" : ", ");
+		fprintf(fp,"gpu%d:%d%s", i, temps[i], (temps[i+1] == -1) ?  ", miner pid: " : ", ");
 
 	fflush(fp);
 	return maxtemp;
