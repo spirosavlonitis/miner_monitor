@@ -46,5 +46,6 @@ int logtemp(FILE *fp)
 	for (i = 0; temps[i] != -1; ++i)
 		fprintf(fp,"gpu%d: %d%s", i, temps[i], (temps[i+1] == -1) ?  "\n" : ", ");
 
+	fflush(fp);
 	return maxtemp;
 }

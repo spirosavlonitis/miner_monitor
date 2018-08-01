@@ -5,7 +5,7 @@
 #define MAXTEMP	 81
 #define MAXCHARS 1000
 #define MINUTE	 60
-#define MON_INRERVAL	5
+#define MON_INRERVAL	1
 
 #define COMMAND  "daemon mine_classic"
 #define PIDOF 	 "pidof ethminer"
