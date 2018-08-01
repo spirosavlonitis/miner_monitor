@@ -2,32 +2,50 @@
 #include <string.h>
 #include <time.h>
 
-static int gettemp()
+#define MAXGPU	100
+
+static int gettemp(int *temps)
 {
-	int	 i;
+	int	 i, j, maxtemp;
 	char temperature[10];
 	FILE *fp;
-	fp = popen("nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader","r");
-	for (i = 0; (temperature[i] = fgetc(fp)) != '\n' ; ++i)
-		;
-	temperature[i] = '\0';
+	
+	fp = popen("nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader", "r");
+	j = 0;
+	for (i = 0; (temperature[i] = fgetc(fp)) != EOF ; ++i)
+		if (temperature[i] == '\n') {
+			temperature[i] = '\0';
+			temps[j++] = atoi(temperature);
+			i = 0;
+		}
 	pclose(fp);
-	return atoi(temperature);
+
+	maxtemp = 0;
+	for (i = 0; temps[i] != -1  ; ++i)
+		if (maxtemp == 0)
+			maxtemp = temps[i];
+		else if (temps[i] > maxtemp)
+			maxtemp = temps[i];
+	return maxtemp;
 }
 
 int logtemp(FILE *fp)
 {
 	char	buf[MAXCHARS];
-	int 	temp;
+	int 	maxtemp, i, temps[MAXGPU];
 	time_t	now;
-	
+
 	time(&now);
-	temp = gettemp();
 	strcpy(buf, ctime(&now));
 	buf[strlen(buf)-1] = '\0';
+	
+	for (i = 0; i < MAXGPU ; ++i)
+		temps[i] = -1;
+	maxtemp = gettemp(temps);
+	fprintf(fp, "%s  temperatures ", buf);
+	for (i = 0; temps[i] != -1; ++i)
+		fprintf(fp,"gpu%d: %d", i,maxtemp);
 
-	fprintf(fp, "%s", buf);
-	fprintf(fp,"\t%d\n",temp);
-
-	return temp;
+	fprintf(fp,"\n");
+	return maxtemp;
 }
