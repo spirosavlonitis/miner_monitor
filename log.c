@@ -1,4 +1,5 @@
 #include "hdr.h"
+#include <string.h>
 #include <time.h>
 
 static int gettemp()
@@ -14,24 +15,18 @@ static int gettemp()
 	return atoi(temperature);
 }
 
-static void setdate(int *year,int *mon,int *mday,int *hour,int *min,int *sec)
-{
-	time_t	smp;
-	struct tm *now;
-	time(&smp);
-	now = localtime(&smp);
-	*year = now->tm_year+1900, *mon = now->tm_mon+1, *mday = now->tm_mday;
-	*hour = now->tm_hour, *min = now->tm_min, *sec = now->tm_sec;
-}
-
 int logtemp(FILE *fp)
 {
-	int year,mon,mday,hour,min,sec,temp;
+	char	buf[MAXCHARS];
+	int 	temp;
+	time_t	now;
 	
+	time(&now);
 	temp = gettemp();
-	setdate(&year,&mon,&mday,&hour,&min,&sec);
-	
-	fprintf(fp,"%d-%d-%d %d%s%d%s%d:",year,mon,mday,hour,(min > 9) ? ":" : ":0",min,(sec > 9) ? ":" : ":0" ,sec);
+	strcpy(buf, ctime(&now));
+	buf[strlen(buf)-1] = '\0';
+
+	fprintf(fp, "%s", buf);
 	fprintf(fp,"\t%d\n",temp);
 
 	return temp;
