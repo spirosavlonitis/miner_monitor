@@ -44,8 +44,7 @@ int logtemp(FILE *fp)
 	maxtemp = gettemp(temps);
 	fprintf(fp, "%s  temperatures ", buf);
 	for (i = 0; temps[i] != -1; ++i)
-		fprintf(fp,"gpu%d: %d, ", i, temps[i]);
+		fprintf(fp,"gpu%d: %d%s", i, temps[i], (temps[i+1] == -1) ?  "\n" : ", ");
 
-	fprintf(fp,"\n");
 	return maxtemp;
 }
