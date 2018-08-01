@@ -16,7 +16,7 @@ static int gettemp(int *temps)
 		if (temperature[i] == '\n') {
 			temperature[i] = '\0';
 			temps[j++] = atoi(temperature);
-			i = 0;
+			i = -1;
 		}
 	pclose(fp);
 
@@ -44,7 +44,7 @@ int logtemp(FILE *fp)
 	maxtemp = gettemp(temps);
 	fprintf(fp, "%s  temperatures ", buf);
 	for (i = 0; temps[i] != -1; ++i)
-		fprintf(fp,"gpu%d: %d", i,maxtemp);
+		fprintf(fp,"gpu%d: %d, ", i, maxtemp);
 
 	fprintf(fp,"\n");
 	return maxtemp;
