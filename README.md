@@ -38,7 +38,7 @@ You can also set other values as well
  sudo ln -s $(PWD)/my_script.sh  /usr/bin/my_command
 ```
 
-2. Edit the symbolic constants in the hdr.h file to match the sybolic link you create above (command), and miner's name.
+2. Edit the symbolic constants in the hdr.h file to match the sybolic link you created above (command), and miner's name.
 ```c
 #define COMMAND  "daemon my_command"
 #define PIDOF 	 "pidof ethminer"
@@ -47,3 +47,13 @@ You can also set other values as well
 ```shell
     gcc *c -o miner_monitor.out
 ```
+4. Execute the program and show the log on a shell, or daemonize it keep the log on a file.
+  a)Shell version with shell log.
+```shell
+    ./miner_monitor.out
+````
+  b) Daemonized version with file log.
+```shell
+ sudo ln -s $(PWD)/miner_monitor.out  /usr/bin/miner_monitor
+ daemon miner_monitor --stdout /home/$USER/gpu_temp.txt
+ ```
