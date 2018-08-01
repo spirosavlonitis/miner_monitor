@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 	readargs(argc,argv);
 
 	pwd = getpwuid(geteuid());
-	snprintf(path, sizeof(path),"/home/%s/gpu_temp.md",pwd->pw_name);
+	snprintf(path, sizeof(path),"/home/%s/gpu_temp.txt",pwd->pw_name);
 
 	for (; ;) {
 		fp = (l) ? fopen(path,"a") : stdout;

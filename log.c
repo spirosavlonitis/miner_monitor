@@ -47,20 +47,21 @@ int logtemp(FILE *fp)
 	char	buf[MAXCHARS];
 	int 	maxtemp, i, temps[MAXGPU];
 	time_t	now;
-
+	
 	time(&now);
 	strcpy(buf, ctime(&now));
 	buf[strlen(buf)-1] = '\0';
-	
+
 	for (i = 0; i < MAXGPU ; ++i)
-		temps[i] = -1;
+		temps[i] = -1;	
 	maxtemp = gettemp(temps);
+	
 	fprintf(fp, "%s  ", buf);
 	for (i = 0; temps[i] != -1; ++i)
 		if (l == 0)
 			color_log(fp, i, temps+i);
 		else
-		  fprintf(fp,"gpu%d:%d%s", i, temps[i], (temps[i+1] == -1) ?  ", miner pid: " : ", ");
+		  fprintf(fp,"gpu%d:%d%s", i, temps[i], (temps[i+1] == -1) ?  "\n" : ", ");
 
 	fflush(fp);
 	return maxtemp;
