@@ -1,4 +1,4 @@
-# miner_monitor
+# miner_monitor   (for Nvidia GPUs)
 Monitor the temperature and connection status of your miner software
 
 Before using this program you will need to install daemon first.
