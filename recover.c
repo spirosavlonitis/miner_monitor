@@ -1,7 +1,6 @@
 #include "hdr.h"
 
 
-
 void recover(FILE *fp,char *pidof)
 {
 	char	kill[MAXCHARS];
