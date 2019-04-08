@@ -8,8 +8,14 @@
 #define MON_INRERVAL	5
 #define RCV_INTERVAL 10
 
-#define COMMAND  "daemon mine_classic"
-#define PIDOF 	 "pidof ethminer"
+
+#define DEF_COMMAND  "daemon mine_eth"
+#define PIDOF 		 "pidof ethminer"
+
+typedef struct monitor
+{
+	int 	max_temp;
+} Monitor;
 
 
 void recover(FILE *,char *);

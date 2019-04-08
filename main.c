@@ -1,18 +1,22 @@
 #include "hdr.h"
 #include <pwd.h>
+#include <string.h>
 
-static void readargs(int argc, char **);
+static void readargs(int argc, char **, char **);
 
 int main(int argc, char *argv[])
 {
 	int temp;
-	char path[MAXCHARS];
+	char path[MAXCHARS], *command = NULL;
 	FILE *fp;
 	struct passwd *pwd;
 	
 	l = 0;
 
-	readargs(argc,argv);
+	readargs(argc,argv, &command);
+	if (command == NULL)
+		command = strdup(DEF_COMMAND);
+	exit(0);
 
 	pwd = getpwuid(geteuid());
 	snprintf(path, sizeof(path),"/home/%s/gpu_temp.txt",pwd->pw_name);
@@ -25,7 +29,7 @@ int main(int argc, char *argv[])
 		if (WEXITSTATUS(system(PIDOF)) == 1){
 			fprintf(fp, "%s\n", "miner down");
 			fflush(fp);
-			system(COMMAND);
+			system(command);
 		}else if (temp >= MAXTEMP)
 			recover(fp,PIDOF);
 		
@@ -36,20 +40,25 @@ int main(int argc, char *argv[])
 	exit(EXIT_SUCCESS);
 }
 
-static void readargs(int argc, char **argv)
+static void readargs(int argc, char **argv, char **command)
 {
 	char	c;
 	int		i;
-
 	while ( --argc > 0) 
-		if ( (c = **++argv ) == '-')
-			for (i = 1; (c = (*argv)[i]) ; ++i)
-				switch (c) {
-					case 'l':
-						l = 1;
-						break;
-					default:
-						err_quit("uknown option %c", c);
-						break;
-				}
+		if ( (c = **++argv ) == '-'){
+			c = (*argv)[1];
+			switch (c) {
+				case 'l':					// log file
+					l = 1;
+					break;
+				case 'c':
+					++argv;
+					--argc;
+					*command = strdup(*argv);
+					break;
+				default:
+					err_quit("uknown option %c", c);
+					break;
+			}
+		}
 }
