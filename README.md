@@ -47,14 +47,9 @@ You can also set other values as well
 ```shell
     gcc *c -o miner_monitor.out
 ```
-4. Execute the program and show the log on a shell, or daemonize it keep the log on a file.
+4. Execute the program.
 
- a)Shell version with shell log.
 ```shell
     ./miner_monitor.out
 ````
-  b) Daemonized version with file log.
-```shell
- sudo ln -s $(PWD)/miner_monitor.out  /usr/bin/miner_monitor
- daemon miner_monitor --stdout /home/$USER/gpu_temp.txt
- ```
+
