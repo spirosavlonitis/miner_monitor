@@ -8,7 +8,7 @@ static void help_message(void);
 int main(int argc, char *argv[])
 {
 	int temp;
-	char path[MAXCHARS], *command = NULL;
+	char path[MAXCHARS], *command = NULL, daemon[MAXCHARS];
 	FILE *fp;
 	struct passwd *pwd;
 	
@@ -18,9 +18,12 @@ int main(int argc, char *argv[])
 	if (command == NULL)
 		command = strdup(DEF_COMMAND);
 	
-	pwd = getpwuid(geteuid());
-	snprintf(path, sizeof(path),"/home/%s/gpu_temp.txt",pwd->pw_name);
+	if (l) {
+		pwd = getpwuid(geteuid());
+		snprintf(path, sizeof(path),"/home/%s/gpu_temp.txt",pwd->pw_name);
+	}
 
+	snprintf(daemon, MAXCHARS, "daemon %s", command);
 	for (; ;) {
 		fp = (l) ? fopen(path,"a") : stdout;
 
@@ -29,7 +32,7 @@ int main(int argc, char *argv[])
 		if (WEXITSTATUS(system(PIDOF)) == 1){
 			fprintf(fp, "%s\n", "miner down");
 			fflush(fp);
-			system(command);
+			system(daemon);
 		}else if (temp >= MAXTEMP)
 			recover(fp,PIDOF);
 		

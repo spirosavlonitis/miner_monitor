@@ -9,7 +9,7 @@
 #define RCV_INTERVAL 10
 
 
-#define DEF_COMMAND  "daemon mine_eth"
+#define DEF_COMMAND  "mine_eth"
 #define PIDOF 		 "pidof ethminer"
 
 typedef struct monitor
