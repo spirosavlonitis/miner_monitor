@@ -16,8 +16,7 @@ int main(int argc, char *argv[])
 	readargs(argc,argv, &command);
 	if (command == NULL)
 		command = strdup(DEF_COMMAND);
-	exit(0);
-
+	
 	pwd = getpwuid(geteuid());
 	snprintf(path, sizeof(path),"/home/%s/gpu_temp.txt",pwd->pw_name);
 
