@@ -3,6 +3,7 @@
 #include <string.h>
 
 static void readargs(int argc, char **, char **);
+static void help_message(void);
 
 int main(int argc, char *argv[])
 {
@@ -42,9 +43,9 @@ int main(int argc, char *argv[])
 static void readargs(int argc, char **argv, char **command)
 {
 	char	c;
-	int		i;
-	while ( --argc > 0) 
-		if ( (c = **++argv ) == '-'){
+	int		i = argc;
+	while (--argc > 0) 
+		if ( (c = **++argv) == '-'){
 			c = (*argv)[1];
 			switch (c) {
 				case 'l':					// log file
@@ -55,9 +56,31 @@ static void readargs(int argc, char **argv, char **command)
 					--argc;
 					*command = strdup(*argv);
 					break;
+				case '-':
+					if (strcmp("help", *argv+2) == 0)
+						help_message();
+					break;
 				default:
 					err_quit("uknown option %c", c);
 					break;
 			}
 		}
+}
+
+
+static void help_message()
+{
+	char *message = "\
+Example:\n    miner_monitor.out -c some_command\n\
+\n\
+Options:\n\
+	-c\tsets the mining command to deamonize\n\t\tdefault value is mine_eth\n\n\
+	-l\tcreates a log file at the user's home directory\n\t\tnamed gpu_temp.txt\n\n\
+	--help\tprints this message\n\
+";
+
+	printf("%s\n", message);
+
+
+	exit(0);
 }
